@@ -1,48 +1,43 @@
-import { FaAngleLeft, FaAngleDown } from "react-icons/fa6";
+import { useState } from 'react';
+import { GoChevronDown, GoChevronLeft } from 'react-icons/go';
 
-import { useState } from "react";
+function Accordion({ items }) {
+  const [expandedIndex, setExpandedIndex] = useState(-1);
 
-function Accordion ({items}){
-    const [expendedIndex, setEXpendedindex]= useState(-1);
+  const handleClick = (nextIndex) => {
+    setExpandedIndex((currentExpandedIndex) => {
+      if (currentExpandedIndex === nextIndex) {
+        return -1;
+      } else {
+        return nextIndex;
+      }
+    });
+  };
 
-    const HandleClick = (Nextindex)=>{
+  const renderedItems = items.map((item, index) => {
+    const isExpanded = index === expandedIndex;
 
-        setEXpendedindex((currentIndexValue)=>{
-            if (currentIndexValue === Nextindex) {
-                return -1;}
-                else {
-                    return Nextindex;}
+    const icon = (
+      <span className="text-2xl">
+        {isExpanded ? <GoChevronDown /> : <GoChevronLeft />}
+      </span>
+    );
 
-        })
+    return (
+      <div key={item.id}>
+        <div
+          className="flex justify-between p-3 bg-gray-50 border-b items-center cursor-pointer"
+          onClick={() => handleClick(index)}
+        >
+          {item.label}
+          {icon}
+        </div>
+        {isExpanded && <div className="border-b p-5">{item.content}</div>}
+      </div>
+    );
+  });
 
-    };
-
-    
-
-   const renderedItems = items.map ((item , index)=>{
-    const isEXpended = index === expendedIndex;
-
-    const icon = <span>
-        {isEXpended ? <FaAngleDown /> : <FaAngleLeft />}
-    </span>
-
-        return (
-            <div key={item.id}>
-                <div className="flex border-b bg-grey-500 items-center justify-between cursor-point"
-                onClick={()=> HandleClick(index)}> 
-                    {item.label} 
-                    {icon}
-                    </div>
-                <div> {isEXpended && <div className="border-b p-3 ">{item.content}</div>} </div>
-            </div>
-        )
-    })
-return (
-    <div className="border-x border-t rounded">
-        {renderedItems}
-        
-    </div>
-)
+  return <div className="border-x border-t rounded">{renderedItems}</div>;
 }
 
 export default Accordion;
