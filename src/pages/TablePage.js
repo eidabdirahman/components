@@ -1,6 +1,8 @@
-import SortableTable from "../components/SortableTable";
+// import Table from "../components/Table";
 
-function TablePage() {
+import SortableTable from "../components/SortableTable";
+function TablePage (){
+
     const fruit = [
         { name: 'orange', color: 'bg-orange-500', score: 3 },
         { name: 'apple', color: 'bg-red-500', score: 5 },
@@ -9,37 +11,37 @@ function TablePage() {
         { name: 'lemon', color: 'bg-yellow-700', score: 8 },
     ];
 
-    const Config = [
+    const   Config = [
         {
-            label: 'Name',
-            render: (fruit) => fruit.name,
-            sortValue: (fruit) => fruit.name,
+          label: 'Name',
+          render: (fruit) => fruit.name,
+          sortValue: (fruit) => fruit.name,
         },
         {
-            label: 'Color',
-            render: (fruit) => <div className={`p-3 m-2 ${fruit.color}`} />,
+          label: 'Color',
+          render: (fruit) => <div className={`p-3 m-2 ${fruit.color}`} />,
         },
         {
-            label: 'Score',
-            render: (fruit) => fruit.score,
-            sortValue: (fruit) => fruit.score,
+          label: 'Score',
+          render: (fruit) => fruit.score,
+          sortValue: (fruit) => fruit.score,
         },
         {
-            label: 'Lemon Score Squared',
-            render: (fruit) => fruit.score ** 2,
-            sortValue: (fruit) => fruit.score ** 2,
+          label: 'lemon',
+          render: (fruit) => fruit.score **2,
+          sortValue: (fruit) => fruit.lemon,
         },
-    ];
+      ];
 
-    const keyFn = (fruit) => {
-        return fruit.name; // Assuming fruit names are unique
+    const keyFn = () =>{
+        return fruit.name
     };
 
-    return (
+    return(
         <div className="container">
-            <SortableTable data={fruit} Config={Config} keyFn={keyFn} />
+            <SortableTable  data={fruit}  Config={Config} keyFn={keyFn}/>
         </div>
-    );
+    )
 }
 
 export default TablePage;
