@@ -1,17 +1,49 @@
-import Button from "../components/Button"
-import useCouter from "../hooks/use-Counter"
+import { useState } from "react";
+import Button from "../components/Button";
+import Panel from '../components/Panel';
 
+function CounterPage({ initialCounter }) {
+    const [count, setCount] = useState(initialCounter);
+    const [valueToAdd, setValueToAdd] = useState(0);
 
-function CounterPage({initialCounter}){
+    const increment = () => {
+        setCount(count + 1);
+    };
 
-    const {Increment, Count} = useCouter(initialCounter);
+    const decrement = () => {
+        setCount(count - 1);
+    };
+
+    const handleChange = (event) => {
+        const value = parseInt(event.target.value) || 0;
+        setValueToAdd(value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setCount(count + valueToAdd);
+        setValueToAdd(0);
+    };
 
     return (
-        <div>
-            <h1>Count is {Count}</h1>
-            <Button  onClick={Increment}>Increment</Button>
-        </div>
-    )
+        <Panel className="m-3">
+            <h1 className="text-lg">Count is {count}</h1>
+            <div className="flex flex-row">
+                <Button onClick={increment}>Increment</Button>
+                <Button onClick={decrement}>Decrement</Button>
+            </div>
+            <form onSubmit={handleSubmit}>
+                <label>Add a lot!</label>
+                <input
+                    type="number"
+                    value={valueToAdd || ""}
+                    onChange={handleChange}
+                    className="p-1 m-3 bg-gray-50 border border-gray-300"
+                />
+                <Button>Add it</Button>
+            </form>
+        </Panel>
+    );
 }
 
 export default CounterPage;

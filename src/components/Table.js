@@ -8,9 +8,9 @@ function Table({ data, Config, keyFn }) {
         return <th key={column.label}>{column.label}</th>;
     });
 
-    const renderedRows = data.map((rowData) => {
-        const renderedCells = Config.map((column) => (
-            <td className="p-2" key={column.label}>{column.render(rowData)}</td>
+    const renderedRows = data.map((rowData, rowIndex) => {
+        const renderedCells = Config.map((column, colIndex) => (
+            <td className="p-2" key={`${column.label}-${rowIndex}`}>{column.render(rowData)}</td>
         ));
         return (
             <tr className="border-b" key={keyFn(rowData)}>
